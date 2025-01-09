@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>TDEE Calculator</title>
+    <link rel="shortcut icon" href="Ticon.ico" type="image/x-icon">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" 
+          rel="stylesheet" 
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" 
+          crossorigin="anonymous">
+
+    <!-- Animate.css -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" 
+          rel="stylesheet">
+
+    <!-- Hover.css -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/hover.css/2.3.1/css/hover-min.css" 
+          rel="stylesheet"
+          integrity="sha512-csw0Ma4oXCAgd/d4nTcpoEoz4nYvvnk21a8VA2h2dzhPAvjbUIK6V3si7/g/HehwdunqqW18RwCJKpD7rL67Xg==" 
+          crossorigin="anonymous">
+
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" 
+          rel="stylesheet"
+          integrity="sha512-5A8nwdMOWrSz20fDsjczgUidUBR8liPYU+WymTZP1lmY9G6Oc7HlZv156XqnsgNUzTyMefFTcsFH/tnJE/+xBg==" 
+          crossorigin="anonymous">
+  
+    <!-- My CSS file -->
+    <link href="style.css" rel="stylesheet">
+</head>
+
+
+
+<body>
+	<div class="container-fluid g-0">
+		<nav class="navbar navbar-expand-md navbar-dark bg-dark px-3">
+			<div class="container">
+				<a class="navbar-brand"><span aria-hidden="true"></span> 
+				TDEE Calculator</a>
+			</div>
+		</nav>
+	</div>
+
+
+	<div class="container jumbotron mt-3">
+		<h1 class="display-5 rainbow-text" style="font-weight: bold;">Learn How Many Calories You Burn Every Day</h1>
+
+		<p class="lead text-justify">Use the TDEE calculator to learn your Total Daily Energy Expenditure, a measure of how many calories you burn per day. This calorie calculator will also display your BMI, BMR, Macros & many other useful statistics!</p>
+
+		<hr class="my-4">
+
+
+		<p class="text-justify">Your <strong><abbr title=
+		"Basal or Resting Metabolic Rate" class="text-danger">BMR</abbr></strong> will be calculated
+		using the Harris-Benedict equation and then used to estimate your
+		<strong><abbr title="Total Daily Energy Expenditure" class="text-danger">TDEE</abbr></strong>
+		using the Katch-McArdle multipliers.<br>
+		Note that the results will change once your stats change. We recommended
+		re-calculating this at least once a month or when noticeable changes to your
+		Weight or Activity Level occur.</p>
+	</div>
+
+
+	<main class="container">
+		<div class="row mb-5">
+			<!-- Calculator/Results -->
+
+
+			<div class="col-md-6 mb-3">
+				<!-- Col 1 Left -->
+				<h2 class="mb-4">Personal Information
+				    <span aria-hidden="true" class="fa fa-user small text-primary"></span>
+			    </h2>
+
+				<form id="personalInfo" name="personalInfo" onsubmit="calcBMR()">
+
+                    <!-- Gender Dropdown Select -->
+					<div class="form-row">
+            
+						<div class="input-group my-2">
+							<div class="input-group-prepend">
+								<label class="input-group-text" for="gender">Gender:</label>
+							</div>
+							<select class="form-control" id="gender" required="">
+								<option disabled selected value="">&nbsp;</option>
+
+								<option value="female">Female</option>
+
+								<option value="male">Male</option>
+							</select>
+						</div>
+					</div>
+
+                    <!-- Weight: Number Input Field -->
+					<div class="form-row">
+
+						<div class="input-group my-2">
+							<div class="input-group-prepend">
+								<label class="input-group-text" for="weight">Weight:</label>
+							</div>
+
+							<input aria-label="Default" class="form-control" id="weight" max="999"
+							placeholder="e.g. 60 or 132" required="" type="number">
+
+							<div class="input-group-append">
+								<span class="input-group-text">kg</span>
+							</div>              
+						</div>
+					</div>
+
+                    <!-- Height: Number Input Field -->
+					<div class="form-row">
+
+						<div class="input-group my-2">
+							<div class="input-group-prepend">
+								<label class="input-group-text" for="height">Height:</label>
+							</div>
+							<input aria-label="Default" class="form-control" id="height" max="299"
+							placeholder="e.g. 155 or 210" required="" type="number">
+
+							<div class="input-group-append">
+								<span class="input-group-text">cm</span>
+							</div>
+						</div>
+					</div>
+
+                    <!-- Age: Number Input Field -->
+					<div class="form-row">
+						<div class="input-group my-2">
+							<div class="input-group-prepend">
+								<label class="input-group-text" for="age" id="inputAge">Age:</label>
+							</div>
+							<input aria-describedby="inputAge" aria-label="Default" class=
+							"form-control" id="age" max="99" placeholder="e.g. 18 or 54" required=""
+							type="number">
+
+							<div class="input-group-append">
+								<span class="input-group-text">yr</span>
+							</div>
+						</div>
+					</div>
+
+                    <!-- Activity Level Dropdown Select -->
+					<div class="form-row">
+
+						<div class="input-group my-2">
+							<div class="input-group-prepend" id="lbl-activity-level">
+								<label class="input-group-text" for="actLevel">Activitiy Level:</label>
+							</div>
+							<select class="form-control" id="actLevel" required="">
+								<option disabled selected value="">&nbsp;</option>
+
+								<option value="1.2">
+									1. Sedentary (little to no exercise + work a desk job)
+								</option>
+
+								<option value="1.375">
+									2. Lightly Active (light exercise 1-3 days/week)
+								</option>
+
+								<option value="1.55">
+									3. Moderately Active (moderate exercise 3-5 days/week)
+								</option>
+
+								<option value="1.725">
+									4. Very Active (heavy exercise 6-7 days/week)
+								</option>
+
+								<option value="1.9">
+									5. Extremely Active (very heavy exercise or work, training 2x/day)
+								</option>
+							</select>
+						</div>
+					</div>
+
+                    <!-- Buttons: Calculate and Clear -->
+					<div class="form-row">
+						
+						<button class="btn btn-primary" id="calcButton" onsubmit="calcBMR()"
+						type="submit" value="Calculate">Calculate</button> 
+            
+                        <input class="btn btn-danger" label="reset" onclick="clearResults()" type="reset"    
+						value="Clear">
+
+					</div>
+				</form>
+			</div>
+
+			
+
+      <!-- Results div - Desktop Right, Mobile bottom  -->
+			<div class="col-md-6 animate__animated d-none" id="results-list">
+
+				<h2 class="mb-4">Results <span aria-hidden="true"
+				class="fa fa-file-text-o small text-muted"></span>
+				</h2>
+
+
+				<ul class="list-group" id="results">
+					<li class="list-group-item">Your <strong>BMR</strong> is <span id=
+					"dailyBMR"></span> kcals.</li>
+
+
+					<li class="list-group-item">Based on your Activity Level, your
+					<strong>TDEE</strong> is <span id="dailyTDEE"></span> kcals.</li>
+
+
+					<li class="list-group-item">To <strong>burn fat</strong> we recommend
+					ingesting <span id="dailyLose"></span> kcals.</li>
+
+
+					<li class="list-group-item">To <strong>gain muscle</strong> we recommend
+					ingesting <span id="dailyGain"></span> kcals.</li>
+
+
+					<li class="list-group-item list-group-item-warning"><span aria-hidden=
+					"true" class="fa fa-exclamation-circle"></span> This is not a substitute
+					for professional medical advice, diagnosis or treatment.</li>
+				</ul>
+			</div>
+		</div>
+
+        <div class="accordion" id="accordionExample">
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingOne"><button aria-controls=
+                "collapseOne" aria-expanded="true" class="accordion-button collapsed"
+                data-bs-target="#collapseOne" data-bs-toggle="collapse" type="button">
+                What is BMR and TDEE?</button>
+                </h2>
+
+                <div aria-labelledby="headingOne" class="accordion-collapse collapse"
+                data-bs-parent="#accordionExample" id="collapseOne">
+                    <div class="accordion-body">
+                        <strong>TDEE</strong> stands for Total Daily Energy Expenditure. It is
+                        the total number of calories you burn in a given day. Your TDEE is
+                        determined by four key factors:
+
+                        <ol>
+                            <li>Basal Metabolic Rate</li>
+                            <li>Thermic Effect of Food</li>
+                            <li>Non-Exercise Activity Thermogenesis</li>
+                            <li>Thermic Effect of Activity (Exercise)</li>
+                        </ol>
+
+                        <strong>BMR</strong> stands for Basal Metabolic Rate, which is the
+                        number of calories your body burns each day to keep you alive. <wbr> BMR
+                        does not include physical activity, the process of digestion (Thermic
+                        Effect of Food), or things like walking from one room to
+                        another(Non-Exercise Activity Thermogenesis). <wbr> Basically, BMR is
+                        the number of calories your body would expend in a 24 hour period if all
+                        you did was lay in bed all day long.<wbr> This is the absolute bare
+                        minimum of calories it takes to ensure your survival.
+
+                    </div>
+                </div>
+            </div>
+
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="headingTwo"><button aria-controls=
+            "collapseTwo" aria-expanded="false" class="accordion-button collapsed"
+            data-bs-target="#collapseTwo" data-bs-toggle="collapse" type="button">How TDEE Is Calculated</button>
+            </h2>
+
+            <div aria-labelledby="headingTwo" class="accordion-collapse collapse"
+            data-bs-parent="#accordionExample" id="collapseTwo">
+                <div class="accordion-body">
+
+                    <p>Your Total Daily Energy Expenditure (TDEE) is an estimation of how many calories you burn per day when exercise is taken into account. It is calculated by first figuring out your Basal Metabolic Rate, then multiplying that value by an activity multiplier. </p>
+
+                    <p> Since your BMR represents how many calories your body burns when at rest, it is necessary to adjust the numbers upwards to account for the calories you burn during the day. This is true even for those with a sedentary lifestyle. Our TDEE calculator uses the best formulas and displays your score in a way that's easy to read and meaningful.</p>
+                </div>
+            </div>
+        </div>
+
+	</main>
+
+
+	<footer class="footer mt-5 py-3 nogutter bg-dark">
+		<div class="row g-0">
+			<ul class="list-unstyled d-flex justify-content-center">
+				<li>
+					<a href= "https://www.linkedin.com/in/nopnarong-wongvilart-b206a0196" rel=
+					"noopener noreferrer" target="_blank"><span aria-hidden="true" class=
+					"fa fa-linkedin-square fa-2x mx-3 hvr-bounce-in"></span></a>
+				</li>
+			</ul>
+		</div>
+
+		<div class="row g-0 d-flex justify-content-center text-light">
+			Made by Nopnarong Wongvilart
+		</div>
+	</footer>
+	
+
+	<!-- jQuery CDN import -->
+	<script defer crossorigin="anonymous" 
+	integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" 
+	src="https://code.jquery.com/jquery-3.6.0.js">
+	</script>
+
+	<!-- Bootstrap Bundle with Popper -->
+	<script defer crossorigin="anonymous" integrity=
+	"sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" src=
+	"https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js">
+	</script> 
+	
+	<!-- My JS file -->	 
+	<script defer src="app.js"></script>
+
+</body>
+</html>
