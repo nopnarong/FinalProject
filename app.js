@@ -1,4 +1,4 @@
-// ตัวแปรที่ใช้ในโค้ด
+// ตัวแปรที่ใช้ในโค้ด Hi
 let gender, weight, height, age, kcalLoss, kcalGain, activityLevel, bmr, dailyBMR, dailyTDEE;
 
 // ฟังก์ชันสำหรับคำนวณ BMR (Basal Metabolic Rate)
